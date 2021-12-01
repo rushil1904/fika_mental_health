@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+  <br><div class="row">
+    <div class="col-lg-6">
+      <div  class="text-center">
+        <h1 class="heading">About Us</h1>
+      </div>
+      <p class="text">Wondering about the problems of the modern world and how they could use their expertise to come up with innovative solutions for the same, a team consisting of college mates from an engineering grad school came up with the idea for fika.</p>
+      <p class="text">Fika is an online counselling platform to prepare you for the fight against mental illness. Whether you are a stressed out student, a burned out employee or having troubles in your relationship we are here to help. We connect you to experts
+      at the click of a mouse. We are accessible to people around the world no matter their age, gender, religion, financial well-being, etc.  We provide you a platform to discuss your problems without the pressure of revealing your identity.</p>
+      <p class="text">Our aim is to reach out to those who haven't been able to seek help due to a variety of reasons and are struggling with symptoms like anxiety, depression, etc. every passing day.</p>
+    </div>
+    <div class="col-lg-6">
+      <img class="img-fluid" src="{% static 'main/brainlift.png' %}">
+    </div>
+  </div>
+  <div style="background:#ffffff00; text-align: center; isolation:isolate;">
+    <br><h5 class="heading">WE WANT THE WORLD TO BE A HAPPIER PLACE.</h5>
+    <p class="text">WE ARE A SMALL AND MIGHTY TEAM PASSIONATE ABOUT THE MENTAL HEALTH AND WELL BEING OF PEOPLE.</p>
+  </div>
+{% endblock %}

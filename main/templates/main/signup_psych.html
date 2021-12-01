@@ -1,0 +1,106 @@
+{% extends "main/base.html" %}
+{% block content %}
+{% if message %}
+    <script>
+        alert('{{ message }}');
+    </script>
+{% endif %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 heading">
+            <h2>Psychiatrist Sign Up</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="text-right text">
+              Not a psychiatrist? Then sign up <a href="{% url 'signup_user' %}" class="heading">here.</a><br><br>
+          </div>
+            <form action="/signup_psych/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="is_psych" value="1">
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 form-group text">
+                      <label for="username">Name</label>
+                      <input type="text" name="username" class="form-control finput" id="username" required>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 form-group text">
+                      <label for="email">Email</label>
+                      <input type="email" name="email" class="form-control finput" id="email" required>
+                  </div>
+                </div>
+                <div class="row text">
+                  <div class="col-lg-4 col-sm-4 form-group">
+                      <label for="number">Mobile No.</label>
+                      <input type="text" name="mobile" class="form-control finput" id="number">
+                  </div>
+                  <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                    <label for="spec">Area of Speciality</label>
+                    <select class="form-control finput" name="spec" id="spec">
+                      <option value="Anxiety">Anxiety</option>
+                      <option value="Depression">Depression</option>
+                      <option value="Stress & Worries">Stress & Worries</option>
+                      <option value="Academics & Worries">Academics & Worries</option>
+                      <option value="Love & Relationship">Love & Relationship</option>
+                      <option value="Teenage Issue">Teenage Issue</option>
+                      <option value="LGBTQ">LGBTQ</option>
+                      <option value="Sexuality">Sexuality</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-4 col-md-4 col-sm-4" >
+                    <label for="city">City</label>
+                    <input type="text" class="form-control finput" name="city" id="city">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 form-group text">
+                      <label for="calendar">Calender link</label>
+                      <input type="url" name="calendar" class="form-control finput" id="calendar" placeholder="Get a public embedable link to your google calendar and paste it here." required>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 form-group text">
+                      <label for="password">Password</label>
+                      <input type="password" name="password" class="form-control finput" id="password" placeholder="atleast 6 characters long" required>
+                  </div>
+                </div>
+                <div class="row form-group text">
+                    <div class="col-sm-5 col-lg-5"><label for="files">Profile Image</label>
+                    <input type="file" name="files[]" class="form-control-file finput col-sm-8 col-lg-8" id="files" accept="image/*" style="border: none;"></div>
+                    <div class="col-sm-3 col-lg-3 mt-4"><button type="button" class="btn btn-danger" onclick="uploadimage()">Upload photo</button></div>
+                    <input type="hidden" name="url" id="url">
+                </div><br>
+                <input type="submit" class="btn btn-danger" value="Sign Up"><br>
+            </form>
+            <hr>
+            <div class="text-center text">
+                Already have an account? <a href="{% url 'login' %}" class="heading">Login here</a><br>
+            </div>
+        </div>
+    </div>
+
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+<script>
+var config = {
+    apiKey: "AIzaSyCd1euA5iB_oUwD_8nY9hdD0iXF2-RB8RI",
+    authDomain: "fika-1.firebaseapp.com",
+    databaseURL: "https://fika-1.firebaseio.com",
+    storageBucket: "fika-1.appspot.com"
+};
+firebase.initializeApp(config);
+function uploadimage(){
+    var storage = firebase.storage();
+    var file = document.getElementById("files").files[0];
+    var storageRef = storage.ref();
+    var thisref = storageRef.child("Profile_Images").child(file.name).put(file);
+    thisref.on('state_changed',function(snapshot){
+            console.log("Uploaded successfully");
+        },
+        function(error) {},
+        function() {
+            // Upload completed successfully, now we can get the download URL
+            var downloadURL = thisref.snapshot.downloadURL;
+            console.log("got url");
+            document.getElementById("url").value = downloadURL;
+            alert("file uploaded successfully");
+        });
+}
+</script>
+{% endblock %}

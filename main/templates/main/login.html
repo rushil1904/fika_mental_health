@@ -1,0 +1,34 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+{% if message %}
+    <script>
+        alert('{{ message }}')
+    </script>
+{% endif %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5 heading">
+            <h2>Login</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <form action="/login/" method="post">
+                {% csrf_token %}
+                <div class="form-group text">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="form-control finput" required>
+                </div>
+                <div class="form-group text">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="form-control finput" required>
+                </div><br>
+                <input type="submit" class="btn btn-danger" value="Log In">
+            </form>
+            <hr>
+            <div class="text-center text">
+                Need an account? <a href="{% url 'signup_user' %}" class="heading">Sign Up here</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
