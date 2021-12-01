@@ -15,3 +15,7 @@
 🧠 Better package than done ever before
 
 [![App Video](https://img.icons8.com/color/48/000000/youtube-play.png)](https://www.youtube.com/watch?v=3cEEhjHReKo "fika- pause and reconnect")
+
+<img src="https://github.com/rushil1904/fika_mental_health/blob/main/media/Screenshot%20(152).png" width="500" height="350"/>
+<img src="https://github.com/rushil1904/fika_mental_health/blob/main/media/Screenshot%20(154).png" width="500" height="350"/>
+<img src="https://github.com/rushil1904/fika_mental_health/blob/main/media/6.jpg" width="500" height="350"/>
