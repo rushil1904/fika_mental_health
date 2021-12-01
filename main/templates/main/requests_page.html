@@ -1,0 +1,54 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+    <br><br>
+    {% if meet_requests %}
+        <h2 class="heading">Pending Requests</h2><br>
+        <ul style="padding-left: 0; list-style-type: none;">{% for ts,req in meet_requests.items %}
+            <li>
+                {% if data.isPsych %}
+                <div class="card mb-3 card-body">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4" align="center">
+                            <h4 class="heading">{{ req.userName }}</h4>
+                            <h5 class="text">{{ req.userEmail }}</h5>
+                        </div>
+                        <div class="col-md-4 col-lg-4" align="center">
+                            <h6 class="text"><b>Topic : </b>{{ req.topic }} <br><br> {{ req.dateTime }} for {{ req.duration }} mins</small></h6>
+                        </div>
+                        <div class="col-md-4 col-lg-4 mt-2 mb-1" align="center">
+                            <form action="/create_meet/" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="psych_name" value="{{ req.psychName }}">
+                                <input type="hidden" name="psych_email" value="{{ req.psychEmail }}">
+                                <input type="hidden" name="date_time" value="{{ req.dateTime }}">
+                                <input type="hidden" name="topic" value="{{ req.topic }}">
+                                <input type="hidden" name="duration" value="{{ req.duration }}">
+                                <input type="hidden" name="user_email" value="{{ req.userEmail }}">
+                                <input type="hidden" name="user_name" value="{{ req.userName }}">
+                                <input type="hidden" name="user_id" value="{{ req.userId }}">
+                                <input type="hidden" name="ts" value="{{ ts }}">
+                                <input type="submit" class="btn btn-danger" value="Book Session">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="card mb-3 card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6" align="center">
+                            <h4 class="heading">{{ req.psychName }}</h4>
+                            <h5 class="text">{{ req.psychEmail }}</h5>
+                        </div>
+                        <div class="col-md-6 col-lg-6" align="center">
+                            <h6 class="text"><b>Topic : </b>{{ req.topic }} <br><br> {{ req.dateTime }} for {{ req.duration }} mins</small></h6>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </li>
+        {% endfor %}</ul>
+    {% else %}
+        <h2 class="text">No Requests</h2>
+    {% endif %}
+{% endblock %}

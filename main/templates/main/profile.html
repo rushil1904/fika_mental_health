@@ -1,0 +1,40 @@
+{% extends "main/base.html" %}
+{% block content %}
+{% if message %}
+    <script>
+        alert('{{ message }}');
+    </script>
+{% endif %}
+<div class="row">
+	<div class="col-md-4" align="center">
+		{% if info.image %}
+			<img src="{{ info.image }}" class="img-fluid" style="border-radius: 50%; height: 300px; width: 300px;" alt="...">
+		{% endif %}
+		<h2 class="heading">{{ info.userName }}</h2>
+		<h3 class="text"><small>{{ info.email }}</small></h3>
+		{% if info.city %}
+			<h4 class="heading"><small>City : {{ info.city }}</small></h4>
+		{% endif %}
+		{% if info.isPsych %}
+			{% if info.speciality %}
+              <h4 class="text"><small class="text-muted">Specialisation in : {{ info.speciality }}</small></h4>
+            {% endif %}
+			<form action="/create_request/" method="post">
+			    {% csrf_token %}
+			    <input type="hidden" name="psych_name" value="{{ info.userName }}">
+			    <input type="hidden" name="psych_email" value="{{ info.email }}">
+			    <input type="hidden" name="psych_id" value="{{ user_id }}">
+			    <input type="submit" class="btn btn-danger mt-1" value="Request a Session">
+			</form>	
+		{% endif %}
+	</div>
+	<div class="col-md-8" align="center">
+		{% if info.calendar %}
+			<div class="mt-4" align="center">
+				<iframe src="{{ info.calendar }}" style="border: 0" width="800" height="500" frameborder="0" scrolling="no"></iframe>
+			</div>
+		{% endif %}
+	</div>
+</div>
+
+{% endblock %}

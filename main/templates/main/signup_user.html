@@ -1,0 +1,105 @@
+{% extends "main/base.html" %}
+{% block content %}
+{% if message %}
+    <script>
+        alert('{{ message }}');
+    </script>
+{% endif %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 heading">
+            <h2>Sign Up</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="text-right text">
+              Are you a psychiatrist? Then sign up <a href="{% url 'signup_psych' %}" class="heading">here.</a><br><br>
+          </div>
+            <form action="/signup_user/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 form-group text">
+                      <label for="username">Username</label>
+                      <input type="text" name="username" class="form-control finput" id="username" required>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 form-group text">
+                      <label for="email">Email</label>
+                      <input type="email" name="email" class="form-control finput" id="email" required>
+                  </div>
+                </div>
+                <div class="row text">
+                  <div class="col-lg-4 col-sm-4 form-group text">
+                      <label for="number">Mobile No.</label>
+                      <input type="text" name="mobile" class="form-control finput" id="number">
+                  </div>
+                  <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                    <label for="gender">Gender</label>
+                    <select class="form-control finput" name="gender" id="gender">
+                      <option value="">--</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-4 col-md-4 col-sm-4" >
+                    <label for="age">Age</label>
+                    <input type="number" class="form-control finput" name="age" min="0" max="100">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 form-group text">
+                      <label for="city">City</label>
+                      <input type="text" name="city" class="form-control finput" id="city">
+                  </div>
+                  <div class="col-lg-6 col-sm-6 form-group text">
+                      <label for="password">Password</label>
+                      <input type="password" name="password" class="form-control finput" id="password" placeholder="atleast 6 characters long" required>
+                  </div>
+                </div>
+                <div class="row form-group text">
+                    <div class="col-sm-5 col-lg-5"><label for="files">Profile Image</label>
+                    <input type="file" name="files[]" class="form-control-file finput col-sm-8 col-lg-8" id="files" accept="image/*" style="border: none;"></div>
+                    <div class="col-sm-3 col-lg-3 mt-4"><button type="button" class="btn btn-danger" onclick="uploadimage()">Upload photo</button></div>
+                    <input type="hidden" name="url" id="url">
+                </div><br>
+                <input type="submit" class="btn btn-danger" value="Sign Up"><br>
+            </form>
+            <hr>
+            <div class="text-center text">
+                Already have an account? <a href="{% url 'login' %}" class="heading">Login here</a><br>
+            </div>
+        </div>
+    </div>
+
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+<script>
+var config = {
+    apiKey: "AIzaSyCd1euA5iB_oUwD_8nY9hdD0iXF2-RB8RI",
+    authDomain: "fika-1.firebaseapp.com",
+    databaseURL: "https://fika-1.firebaseio.com",
+    storageBucket: "fika-1.appspot.com"
+};
+firebase.initializeApp(config);
+
+function uploadimage(){
+    var storage = firebase.storage();
+    var file = document.getElementById("files").files[0];
+    var storageRef = storage.ref();
+    var thisref = storageRef.child("Profile_Images").child(file.name).put(file);
+    
+    thisref.on('state_changed',function(snapshot){
+            console.log("Uploaded successfully");
+        },
+
+        function(error) {},
+
+        function() {
+            // Upload completed successfully, now we can get the download URL
+            var downloadURL = thisref.snapshot.downloadURL;
+            console.log("got url");
+            document.getElementById("url").value = downloadURL;
+            alert("file uploaded successfully");
+        });
+}
+</script>
+{% endblock %}

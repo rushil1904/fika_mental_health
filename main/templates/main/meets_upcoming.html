@@ -1,0 +1,39 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+    <br><br>
+    {% if meets_upcoming %}
+        <h2 class="heading">Upcoming Sessions</h2><br>
+        <ul style="padding-left: 0; list-style-type: none;">{% for ts,meet in meets_upcoming.items %}
+            <li>
+                {% if data.isPsych %}
+                <div class="card mb-3 card-body">
+                    <div class="row">
+                    <div class="col-md-6 col-lg-6" align="center">
+                        <h4 class="heading">{{ meet.userName }}</h4> 
+                        <h5 class="text">{{ meet.userEmail }}</h5>
+                    </div>
+                    <div class="col-md-6 col-lg-6" align="center">
+                        <h5 class="text"><b>Topic : </b>{{ meet.topic }}</h5><h5 class="text"> {{ meet.dateTime }} for {{ meet.duration }} mins</h5>
+                    </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="card mb-3 card-body">
+                    <div class="row">
+                    <div class="col-md-6 col-lg-6" align="center">
+                        <h4 class="heading">{{ meet.psychName }}</h4> 
+                        <h5 class="text">{{ meet.psychEmail }}</h5>
+                    </div>
+                    <div class="col-md-6 col-lg-6" align="center">
+                        <h5 class="text"><b>Topic : </b>{{ meet.topic }}</h5><h5 class="text"> {{ meet.dateTime }} for {{ meet.duration }} mins</h5>
+                    </div>
+                    </div>
+                </div>
+                {% endif %}
+            </li>
+        {% endfor %}</ul>
+    {% else %}
+        <h2 class="text">No Upcoming Sessions</h2>
+    {% endif %}
+{% endblock %}

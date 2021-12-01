@@ -1,0 +1,13 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+    <br><h1 class="heading">{{ article.title }}</h1><br>
+    <div class="container">
+		<ul>{% for para in article.article %}
+		    <li>
+	            <b class="text">{{ para.title }}</b>
+	            <p class="text">{{ para.para }}</p>
+		    </li>
+		{% endfor %}</ul>
+	</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+{% if message %}
+    <script>
+        alert('{{ message }}')
+    </script>
+{% endif %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5 heading">
+            <h2>Make a request</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <form action="/make_request/" method="post">
+                {% csrf_token %}
+                <div class="form-group text">
+                    <label for="datetime">Date & Time</label>
+                    <input type="datetime-local" name="date_time" class="form-control finput" required>
+                </div>
+                <div class="form-group text">
+                    <label for="datetime">Duration (in mins)</label>
+                    <input type="number" name="duration" class="form-control finput" required>
+                </div>
+                <div class="form-group text">
+                    <label for="topic">Topic</label>
+                    <input type="text" name="topic" class="form-control finput" required>
+                </div><br>
+                <input type="hidden" name="psych_name" value="{{ info.psych_name }}">
+                <input type="hidden" name="psych_email" value="{{ info.psych_email }}">
+                <input type="hidden" name="psych_id" value="{{ info.psych_id }}">
+                <input type="hidden" name="user_name" value="{{ data.userName }}">
+                <input type="hidden" name="user_email" value="{{ data.email }}">
+                <input type="submit" class="btn btn-danger" value="Proceed">
+                <button class="btn btn-light ml-2" style="background-color: #ffffffcc"><a href="{% url 'therapist' %}" class="heading">Go Back</a></button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

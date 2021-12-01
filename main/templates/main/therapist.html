@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+{% if therapists %}
+  <h2 class="heading">Our Therapists</h2><br>
+  <div class="container">
+    <ul style="padding-left: 0; list-style-type: none;">{% for uid,therapist in therapists.items %}
+      <li>
+        <div class="card mb-3">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+             <div class="img-fluid" style="width: 250px; height: 250px;"> <img src="{{ therapist.image }}" class="card-img" alt="..."></div>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title text">{{ therapist.userName }}</h5>
+                {% if therapist.speciality %}
+                  <p class="card-text"><small class="text-muted">Specialisation in : {{ therapist.speciality }}</small></p>
+                {% endif %}
+                <a href="{% url 'profile' therapist.email %}"><button class="btn btn-danger" style="isolation:isolate;">View Profile</button></a>
+              </div>
+            </div>
+          </div>
+        </div><br>
+      </li>
+    {% endfor %}</ul>
+  </div>
+{% else %}
+    <h2 class="text">No Therapists</h2>
+{% endif %}
+{% endblock %}
